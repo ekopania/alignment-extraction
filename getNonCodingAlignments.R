@@ -25,7 +25,8 @@ if (ncol(regions)==3){
 }
 
 regions.df = as.data.frame(regions)
-regions.df[,2] = as.integer(regions.df[,2])
+#NOTE: Modified by E. Kopania on 14 November 2024; BED and MAF are both 0-based but this script uses RPHAST functions that assume 1-based, so MAF will be read in as 1-based, adding 1 here reads in the BED as 1-based so that coordinate systems will be consistent between the BED and MAF
+regions.df[,2] = as.integer(regions.df[,2])+1
 regions.df[,3] = as.integer(regions.df[,3])
 
 regions_sorted = regions.df[order(regions.df[,2], decreasing=F),]

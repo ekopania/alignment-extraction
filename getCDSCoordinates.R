@@ -14,7 +14,7 @@ outPath = opt$outputpath
 #outPath = 'output/CDS-coordinates/mm10.ncbiRefSeq.coding.chrY.gtf'
 
 
-all_gtf = read.delim(gtf_input_path, header=F)
+all_gtf = read.delim(gtf_input_path, header=F, comment="#")
 
 ### Isolate CDS and stop codons
 retain_cats = c("CDS", "stop_codon")
