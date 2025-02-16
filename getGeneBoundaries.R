@@ -32,7 +32,6 @@ for (i in 1:length(gene_id_unique)){
 	genepred_gene_i = genepred_cds[ind_gene_id,]
 	genepred_gene_i[,2] = format(genepred_gene_i[,2], scientific=FALSE)
 	genepred_gene_i[,3] = format(genepred_gene_i[,3], scientific=FALSE)
-	
 	genepred_merged_i = genepred_gene_i
 	
 	##############
