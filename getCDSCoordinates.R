@@ -68,7 +68,7 @@ for (i in 1:length(unq_gene_ids)){
 	} else if (length(ind_NM) == 1){
 		ind_transcript_id = which(transcripts_i == unq_transcripts_id[ind_NM])
 		gene_gtf = gene_gtf[ind_transcript_id,]
-	} else if (length(ind_NM == 0)){
+	} else if (length(ind_NM) == 0){
 		transcript_lengths = rep(0, length(unq_transcripts_id))
 		for (j in 1:length(unq_transcripts_id)){
 			ind_transcript_j = which(transcripts_i == unq_transcripts_id[j])
@@ -77,7 +77,8 @@ for (i in 1:length(unq_gene_ids)){
 			transcript_lengths[j] = sum(CDS_lengths) - 3
 		}
 		use_transcript_id = unq_transcripts_id[which(transcript_lengths == max(transcript_lengths))]
-		ind_transcript_id = which(transcripts_i == use_transcript_id[3])
+		#Elysia had this as use_transcript_id[3], which returns integer(0) if there are <3 transcripts with max length; not sure why she chose 3 but I am changing this to 1
+		ind_transcript_id = which(transcripts_i == use_transcript_id[1])
 		gene_gtf = gene_gtf[ind_transcript_id,]
 	}
 	
