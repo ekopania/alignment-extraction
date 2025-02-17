@@ -92,44 +92,40 @@ for (i in 1:length(splitnum_sort)){
 		
 		if (length(ind_gene_partial_in_maf) > 0){
 			partial_gene_in_maf = gene_boundaries_sorted[ind_gene_partial_in_maf,]
-			print(partial_gene_in_maf)
+			#print(partial_gene_in_maf)
 			
 			for (j in 1:nrow(partial_gene_in_maf)){
 				gene_j = partial_gene_in_maf$gene_id[j]
-				print(gene_j)
+				#print(gene_j)
 				strand = partial_gene_in_maf$strand[j]
 				gene_exons_j = gene_cds_information[gene_j][[1]]
 
 				### tidy up exons that lie across two mafs
 				ind_split_exon = intersect(intersect(which(as.numeric(gene_exons_j[,2]) >= maf_start), which(as.numeric(gene_exons_j[,2]) <= maf_end)), which(as.numeric(gene_exons_j[,3]) > maf_end))
-				print(ind_split_exon)
+				#print(ind_split_exon)
 				if (length(ind_split_exon) > 0){
 					split_exon = gene_exons_j[ind_split_exon,]
 					#For dealing with genes that have multile exons in a row that span 2 mafs; should only ever be in a row since they are sorted
-					ind_split_exon_min = min(ind_split_exon)
-					ind_split_exon_max = max(ind_split_exon)
-					print(ind_split_exon_min)
-					print(ind_split_exon_max)
-					print(gene_exons_j)
-					if (ind_split_exon_max == nrow(gene_exons_j)){
-						corrected_exon_starts = c(gene_exons_j[1:ind_split_exon_min,2] , maf_end+1)
+					#print(gene_exons_j)
+					if (ind_split_exon == nrow(gene_exons_j)){
+						corrected_exon_starts = c(gene_exons_j[1:ind_split_exon,2] , maf_end+1)
 					} else {
-						corrected_exon_starts = c(gene_exons_j[1:ind_split_exon_min,2], maf_end+1, gene_exons_j[(ind_split_exon_max+1):nrow(gene_exons_j),2])
+						corrected_exon_starts = c(gene_exons_j[1:ind_split_exon,2], maf_end+1, gene_exons_j[(ind_split_exon+1):nrow(gene_exons_j),2])
 					}
 
-					if (ind_split_exon_min == 1){
-						corrected_exon_ends = c(maf_end, gene_exons_j[ind_split_exon_max:nrow(gene_exons_j),3])
+					if (ind_split_exon == 1){
+						corrected_exon_ends = c(maf_end, gene_exons_j[ind_split_exon:nrow(gene_exons_j),3])
 					} else {
-						corrected_exon_ends = c(gene_exons_j[1:(ind_split_exon_min-1),3], maf_end, gene_exons_j[ind_split_exon_max:nrow(gene_exons_j),3])
+						corrected_exon_ends = c(gene_exons_j[1:(ind_split_exon-1),3], maf_end, gene_exons_j[ind_split_exon:nrow(gene_exons_j),3])
 					}
 					gene_exons_j = data.frame("chr"=rep(chr, length(corrected_exon_starts)), "start"=corrected_exon_starts, "end"=corrected_exon_ends)
-					print(gene_exons_j)
+					#print(gene_exons_j)
 				}
 
 				### find which exons lie in this current maf
 				ind_exons_in_maf = which(as.numeric(gene_exons_j[,3]) <= maf_end)
 				exons_in_maf = gene_exons_j[ind_exons_in_maf,]
-				print(exons_in_maf)
+				#print(exons_in_maf)
 
 				for (k in 1:nrow(exons_in_maf)){
 					if (k == 1){
@@ -143,7 +139,7 @@ for (i in 1:length(splitnum_sort)){
 				######## find exons lying in other mafs
 				ind_exons_notin_maf = which(as.numeric(gene_exons_j[,3]) > maf_end)
 				exons_notin_maf = gene_exons_j[ind_exons_notin_maf,]
-				print(exons_notin_maf)
+				#print(exons_notin_maf)
 
 				remaining_exons_count = nrow(exons_notin_maf)
 				additional_maf_count = 1
