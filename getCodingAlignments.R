@@ -105,7 +105,6 @@ for (i in 1:length(splitnum_sort)){
 				#print(ind_split_exon)
 				if (length(ind_split_exon) > 0){
 					split_exon = gene_exons_j[ind_split_exon,]
-					#For dealing with genes that have multile exons in a row that span 2 mafs; should only ever be in a row since they are sorted
 					#print(gene_exons_j)
 					if (ind_split_exon == nrow(gene_exons_j)){
 						corrected_exon_starts = c(gene_exons_j[1:ind_split_exon,2] , maf_end+1)
